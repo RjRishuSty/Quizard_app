@@ -33,7 +33,7 @@ const HeroSection = () => {
       >
         {heroCardsData.map((item, index) => (
           <Grid size={{ xs: 12, sm: 12, md: 6 }} key={index}>
-            <Cards item={item} />
+            <Cards item={item} useIn="heroSection" />
           </Grid>
         ))}
       </Grid>

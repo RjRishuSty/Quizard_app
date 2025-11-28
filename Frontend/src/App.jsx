@@ -2,11 +2,12 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AppLayout from "./layouts/AppLayout";
+import QuizePage from "./pages/QuizePage";
 
 const App = () => {
   const router = createBrowserRouter([
     {
-      Path: "/",
+      path: "/",
       element: <AppLayout />,
       children: [
         {
@@ -14,24 +15,8 @@ const App = () => {
           element: <HomePage />,
         },
         {
-          index: true,
-          element: "",
-        },
-        {
-          index: true,
-          element: "",
-        },
-        {
-          index: true,
-          element: "",
-        },
-        {
-          index: true,
-          element: "",
-        },
-        {
-          index: true,
-          element: "",
+          path: "quize/:id",
+          element: <QuizePage />,
         },
       ],
     },
