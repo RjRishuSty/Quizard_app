@@ -79,7 +79,7 @@ const Cards = ({ item, useIn }) => {
               sx={{
                 ...flexAround,
                 position: "absolute",
-                bottom: 50,
+                bottom: 75,
                 width: "100%",
               }}
             >
@@ -113,12 +113,14 @@ const Cards = ({ item, useIn }) => {
   return (
     <Card
       sx={{
-        bgcolor: image ? "primary.main" : "rgba(255,255,255,0.08)",
+        bgcolor: image ? "primary.dark" : "rgba(255,255,255,0.08)",
         p: { xs: image ? 0 : 2, sm: image ? 0 : 3, md: image ? 0 : 4 },
         borderRadius: image ? 1 : 3,
         color: "inherit",
         backdropFilter: "blur(4px)",
         cursor: "pointer",
+        boxShadow:'none',
+        minHeight:image?280:null
       }}
       onClick={image ? handleClick : null}
     >

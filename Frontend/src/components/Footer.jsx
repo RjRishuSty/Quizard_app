@@ -16,7 +16,6 @@ import { X } from '@mui/icons-material';
 import { flexBetween } from '../styles/flexStyles';
 
 const footerStyle = {
-  border:'2px solid red',
   backgroundColor: 'primary.main', 
   width: '100%',
   padding: '30px 40px',

@@ -1,12 +1,15 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { quizeData } from "../objects/quizeData";
 import { flexCenter } from "../styles/flexStyles";
 
 const QuizePage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const filterData = quizeData.find((item) => item.id === Number(id));
-
+  const handlePlayQuize = () => {
+  navigate(`/quize/play/${filterData.id}`);
+};
   if (!filterData) return <Typography>Quiz not found!</Typography>;
   return (
     <Stack sx={{ minHeight: "90vh", ...flexCenter }}>
@@ -70,23 +73,27 @@ const QuizePage = () => {
                   textAlign: "start",
                 }}
               >
-                {" "}
                 {filterData.questions}
               </Typography>{" "}
               Questions
             </Typography>
             <Box sx={{ mt: 2 }}>
-              {filterData.btn.map((item) => (
-                <Button
-                  startIcon={item.icon}
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  sx={{ m: 1 }}
-                >
-                  {item.label}
-                </Button>
-              ))}
+              {filterData.btn.map((item) => {
+                const playBtn = item.label === "Play";
+                return (
+                  <Button
+                    key={item.label}
+                    startIcon={item.icon}
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    sx={{ m: 1 }}
+                    onClick={playBtn ? handlePlayQuize : null}
+                  >
+                    {item.label}
+                  </Button>
+                );
+              })}
             </Box>
           </Grid>
         </Grid>

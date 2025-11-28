@@ -8,7 +8,7 @@ const AppLayout = () => {
   return (
     <>
       <Header />
-      <Box component="main" sx={{position:'relative',mt:5}}>
+      <Box component="main" sx={{position:'relative',mt:7}}>
         <Outlet />
       </Box>
       <Footer />

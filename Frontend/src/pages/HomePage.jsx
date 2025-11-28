@@ -16,8 +16,8 @@ const HomePage = () => {
     <Box>
       <HeroSection />
       <Box sx={{ px: 3 }}>
-        <QuizSwiper title="Personality Quizzes" data={personalityQuizzes} />
-        <QuizSwiper title="Trending Quizzes" data={trendingQuizzes} />
+        <QuizSwiper title="Personality Quizzes" data={personalityQuizzes}  type="personality" />
+        <QuizSwiper title="Trending Quizzes" data={trendingQuizzes}  type="trending"/>
       </Box>
     </Box>
   );

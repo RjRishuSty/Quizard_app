@@ -3,6 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AppLayout from "./layouts/AppLayout";
 import QuizePage from "./pages/QuizePage";
+import QuizePlay from "./pages/QuziePlay";
+import QuizeCompletedPage from "./pages/QuizeCompletedPage";
+import ShowAllQuize from "./pages/ShowAllQuize";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -15,8 +18,20 @@ const App = () => {
           element: <HomePage />,
         },
         {
+          path: "/:label",
+          element: <ShowAllQuize />,
+        },
+        {
           path: "quize/:id",
           element: <QuizePage />,
+        },
+        {
+          path: "quize/play/:id",
+          element: <QuizePlay />,
+        },
+        {
+          path: "quize/completed/:id",
+          element: <QuizeCompletedPage />,
         },
       ],
     },
