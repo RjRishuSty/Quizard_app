@@ -1,0 +1,45 @@
+export const quizFormFields = [
+  {
+    id: "quizName",
+    label: "Quiz Name",
+    type: "text",
+    placeholder: "Enter quiz name",
+    defaultValue: "",
+    fullWidth: true,
+    size: "small",
+  },
+  {
+    id: "numQuestions",
+    label: "Number of Questions",
+    type: "number",
+    placeholder: "10",
+    defaultValue: 10,
+    fullWidth: true,
+    size: "small",
+  },
+  {
+    id: "quizType",
+    label: "Quiz Type",
+    type: "select",
+    options: [
+      { value: "personality", label: "Personality Quizzes" },
+      { value: "trending", label: "Trending Quizzes" },
+    ],
+    defaultValue: "",
+    fullWidth: true,
+    size: "small",
+  },
+  {
+    id: "sourceType",
+    label: "Source Type",
+    type: "select",
+    options: [
+      { value: "url", label: "URL" },
+      { value: "pdf", label: "PDF" },
+    //   { value: "text", label: "Text Base" },
+    ],
+    defaultValue: "",
+    fullWidth: true,
+    size: "small",
+  },
+];

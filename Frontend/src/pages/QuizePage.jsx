@@ -2,21 +2,31 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { quizeData } from "../objects/quizeData";
 import { flexCenter } from "../styles/flexStyles";
+import { useState } from "react";
+import QuizeModel from "../components/QuizeModel";
 
 const QuizePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [openModel, setOpenModel] = useState(false);
   const filterData = quizeData.find((item) => item.id === Number(id));
   const handlePlayQuize = () => {
-  navigate(`/quize/play/${filterData.id}`);
-};
+    navigate(`/quize/play/${filterData.id}`);
+  };
+
+  const handleOpenShareModel = () => {
+    setOpenModel(true);
+  };
+  const handleCloseShareModel = () => {
+    setOpenModel(false);
+  };
+
   if (!filterData) return <Typography>Quiz not found!</Typography>;
   return (
-    <Stack sx={{ minHeight: "90vh", ...flexCenter }}>
+    <Stack sx={{ minHeight: "90vh", ...flexCenter,bgcolor:'primary.dark' }}>
       <Container
         sx={{
-          py: 10,
-          bgcolor: "primary.light",
+          py: 5,
           borderRadius: { xs: 0, sm: 0, md: 1 },
         }}
       >
@@ -28,7 +38,7 @@ const QuizePage = () => {
               alt={filterData.title}
               sx={{
                 width: "100%",
-                height: { xs: 200, sm: 350, md: 350 },
+                height: { xs: 250, sm: 350, md: 350 },
                 objectPosition: "center",
                 objectFit: "cover",
                 borderRadius: 2,
@@ -44,14 +54,10 @@ const QuizePage = () => {
           </Grid>
           <Grid
             size={{ xs: 12, sm: 12, md: 7 }}
-            sx={{
-              py: 3,
-            }}
           >
             <Typography
               gutterBottom
-              variant={"h4"}
-              sx={{ color: "primary.contrastText", fontWeight: 900 }}
+              sx={{ color: "primary.contrastText", fontWeight: 800 ,fontSize:{xs:'1.5rem',sm:'1.9rem',md:'2.5rem'}}}
             >
               {filterData.title}
             </Typography>
@@ -80,6 +86,7 @@ const QuizePage = () => {
             <Box sx={{ mt: 2 }}>
               {filterData.btn.map((item) => {
                 const playBtn = item.label === "Play";
+                const shareBtn = item.label === "Play With Friends";
                 return (
                   <Button
                     key={item.label}
@@ -88,13 +95,28 @@ const QuizePage = () => {
                     color="secondary"
                     size="large"
                     sx={{ m: 1 }}
-                    onClick={playBtn ? handlePlayQuize : null}
+                    onClick={
+                      playBtn
+                        ? handlePlayQuize
+                        : shareBtn
+                        ? handleOpenShareModel
+                        : null
+                    }
                   >
                     {item.label}
                   </Button>
                 );
               })}
             </Box>
+            {openModel && (
+              <QuizeModel
+                handleClose={handleCloseShareModel}
+                open={openModel}
+                quizId={filterData.id}
+                quizTitle={filterData.title}
+                useIn='shareData'
+              />
+            )}
           </Grid>
         </Grid>
       </Container>

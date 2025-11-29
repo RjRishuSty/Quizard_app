@@ -6,6 +6,7 @@ import QuizePage from "./pages/QuizePage";
 import QuizePlay from "./pages/QuziePlay";
 import QuizeCompletedPage from "./pages/QuizeCompletedPage";
 import ShowAllQuize from "./pages/ShowAllQuize";
+import GenerateQuizePage from "./pages/GenerateQuizePage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -18,7 +19,11 @@ const App = () => {
           element: <HomePage />,
         },
         {
-          path: "/:label",
+          path: 'generate-quize',
+          element: <GenerateQuizePage />,
+        },
+        {
+          path: "quizes/:label",
           element: <ShowAllQuize />,
         },
         {

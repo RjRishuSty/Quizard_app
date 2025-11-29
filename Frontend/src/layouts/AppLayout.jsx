@@ -3,12 +3,14 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ScrollToTop from "../components/ScrollToTop";
 
 const AppLayout = () => {
   return (
     <>
       <Header />
-      <Box component="main" sx={{position:'relative',mt:7}}>
+      <ScrollToTop />
+      <Box component="main" sx={{ position: "relative", mt: 7 }}>
         <Outlet />
       </Box>
       <Footer />

@@ -14,7 +14,7 @@ const HeroSection = () => {
         bgcolor: "primary.main",
         color: "primary.contrastText",
         overflow: "hidden",
-        pt: { xs: 15, sm: 18, md: 20 },
+        pt: { xs: 5, sm: 10, md: 20 },
         pb: { xs: 22, sm: 25, md: 30 },
       }}
     >

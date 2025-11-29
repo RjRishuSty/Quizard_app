@@ -22,7 +22,7 @@ const QuizSlider = ({ title, data, type }) => {
   const isMobile = useMediaQuery("(max-width:550px)");
 
   const handleSeeAll = () => {
-    navigate(`/${type}`);
+    navigate(`quizes/${type}`);
   };
   return (
     <Box sx={{ position: "relative", mb: 5 }}>

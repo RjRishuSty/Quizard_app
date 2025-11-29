@@ -1,7 +1,7 @@
 export const menuLinks = [
   {
     label: "Discover",
-    path: "/discover",
+    path: "/",
   },
   {
     label: "AI",

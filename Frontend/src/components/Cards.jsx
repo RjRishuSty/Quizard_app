@@ -1,15 +1,26 @@
 import { Box, Typography, Button, Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { flexAround } from "../styles/flexStyles";
 import { Navigate, useNavigate } from "react-router-dom";
+import QuizeModel from "./QuizeModel";
 
 const Cards = ({ item, useIn }) => {
   const navigate = useNavigate();
+  const [openModel, setOpenModel] = useState(false);
   const handleClick = () => {
     navigate(`quize/${item.id}`);
   };
 
   const image = useIn === "ImageSection";
+  const generateQuizWithAi = item?.primaryBtn?.text === "Generate Quiz";
+
+  const handleOpenModel = () => {
+    setOpenModel(true);
+  };
+  const handleCloseModel = () => {
+    setOpenModel(false);
+  };
+
   const renderCard = () => {
     switch (useIn) {
       case "heroSection":
@@ -36,6 +47,7 @@ const Cards = ({ item, useIn }) => {
                   variant={item.primaryBtn.variant}
                   color="secondary"
                   size="large"
+                  onClick={generateQuizWithAi ? handleOpenModel : null}
                 >
                   {item.primaryBtn.text}
                 </Button>
@@ -111,21 +123,26 @@ const Cards = ({ item, useIn }) => {
     }
   };
   return (
-    <Card
-      sx={{
-        bgcolor: image ? "primary.dark" : "rgba(255,255,255,0.08)",
-        p: { xs: image ? 0 : 2, sm: image ? 0 : 3, md: image ? 0 : 4 },
-        borderRadius: image ? 1 : 3,
-        color: "inherit",
-        backdropFilter: "blur(4px)",
-        cursor: "pointer",
-        boxShadow:'none',
-        minHeight:image?280:null
-      }}
-      onClick={image ? handleClick : null}
-    >
-      {renderCard()}
-    </Card>
+    <>
+      <Card
+        sx={{
+          bgcolor: image ? "primary.dark" : "rgba(255,255,255,0.08)",
+          p: { xs: image ? 0 : 2, sm: image ? 0 : 3, md: image ? 0 : 4 },
+          borderRadius: image ? 1 : 3,
+          color: "inherit",
+          backdropFilter: "blur(4px)",
+          cursor: "pointer",
+          boxShadow: "none",
+          minHeight: image ? 280 : null,
+        }}
+        onClick={image ? handleClick : null}
+      >
+        {renderCard()}
+      </Card>
+      {openModel && (
+        <QuizeModel handleClose={handleCloseModel} open={openModel} useIn='generateQuize' />
+      )}
+    </>
   );
 };
 
