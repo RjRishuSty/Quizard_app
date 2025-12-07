@@ -15,6 +15,10 @@ import { useRef } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { staggerChildren } from "../animations/commanAnimations";
+
+const MotionBox = motion(Box);
 
 const QuizSlider = ({ title, data, type }) => {
   const swiperRef = useRef(null);
@@ -84,11 +88,18 @@ const QuizSlider = ({ title, data, type }) => {
           1200: { slidesPerView: 4 }, // Large desktop
         }}
       >
-        {data.map((item, index) => (
-          <SwiperSlide key={index}>
-            <Cards useIn="ImageSection" item={item} />
-          </SwiperSlide>
-        ))}
+        <MotionBox
+          variants={staggerChildren}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {data.map((item, index) => (
+            <SwiperSlide key={index}>
+              <Cards useIn="ImageSection" item={item} />
+            </SwiperSlide>
+          ))}
+        </MotionBox>
       </Swiper>
     </Box>
   );

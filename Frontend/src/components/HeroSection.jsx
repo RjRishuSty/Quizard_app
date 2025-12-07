@@ -2,7 +2,10 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import Cards from "./Cards";
 import { heroCardsData } from "../objects/heroCards";
-import SearchBox from "./SearchBox";
+import { motion } from "framer-motion";
+import { cardVariant, containerVariants } from "../animations/heroSection";
+
+const GridMotion = motion(Grid);
 
 const HeroSection = () => {
   return (
@@ -18,7 +21,10 @@ const HeroSection = () => {
         pb: { xs: 22, sm: 25, md: 30 },
       }}
     >
-      <Grid
+      <GridMotion
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
         container
         rowSpacing={2}
         columnSpacing={3}
@@ -32,11 +38,16 @@ const HeroSection = () => {
         }}
       >
         {heroCardsData.map((item, index) => (
-          <Grid size={{ xs: 12, sm: 12, md: 6 }} key={index}>
+          <Grid
+            component={motion.div}
+            variants={cardVariant}
+            size={{ xs: 12, sm: 12, md: 6 }}
+            key={index}
+          >
             <Cards item={item} useIn="heroSection" />
           </Grid>
         ))}
-      </Grid>
+      </GridMotion>
 
       <Box
         component="span"

@@ -3,10 +3,10 @@ import { Typography, Dialog, useMediaQuery } from "@mui/material";
 
 import GenerateQuize from "./GenerateQuize";
 import ShareData from "./ShareData";
+import PlayMode from "./PlayMode";
 
 const QuizeModel = ({ open, handleClose, quizId, quizTitle, useIn }) => {
-
-const isMobile = useMediaQuery("(max-width:500px)");
+  const isMobile = useMediaQuery("(max-width:500px)");
   const RenderComponent = useMemo(() => {
     switch (useIn) {
       case "shareData":
@@ -18,11 +18,9 @@ const isMobile = useMediaQuery("(max-width:500px)");
           />
         );
       case "generateQuize":
-        return (
-          <GenerateQuize
-            handleClose={handleClose}
-          />
-        );
+        return <GenerateQuize handleClose={handleClose} />;
+      case "chooseMode":
+        return <PlayMode quizId={quizId} handleClose={handleClose} />
       default:
         return <Typography>Not Found — provide correct useIn</Typography>;
     }
@@ -37,8 +35,8 @@ const isMobile = useMediaQuery("(max-width:500px)");
           backgroundColor: "primary.dark",
           color: "white",
           borderRadius: 2,
-          width: '100%',
-          p:isMobile?1: 3,
+          width: "100%",
+          p: isMobile ? 1 : 3,
         },
       }}
     >

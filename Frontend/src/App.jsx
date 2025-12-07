@@ -22,7 +22,7 @@ const App = () => {
           path: 'generate-quize',
           element: <GenerateQuizePage />,
         },
-        {
+        { 
           path: "quizes/:label",
           element: <ShowAllQuize />,
         },

@@ -16,6 +16,16 @@ import { flexBetween } from "../styles/flexStyles";
 import { menuLinks } from "../objects/menuLinks";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./Sidebar";
+import { motion } from "framer-motion";
+import {
+  headerVariants,
+  logoVariants,
+  navContainerVariants,
+  navItemVariants,
+} from "../animations/headerAnimations";
+
+const AppBarMotion = motion(AppBar);
+const BoxMotion = motion(Box);
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -35,69 +45,88 @@ const Header = () => {
     setOpen((prev) => !prev);
   }, []);
   return (
-    <AppBar
+    <AppBarMotion
       position="fixed"
       elevation={0}
+      variants={headerVariants}
+      initial="hidden"
+      animate="show"
       sx={{ backgroundColor: "primary.main" }}
     >
       <Toolbar sx={{ ...flexBetween }}>
-        <Logo />
-        <Box
+        <motion.div variants={logoVariants}>
+          <Logo />
+        </motion.div>
+        <BoxMotion
+          variants={navContainerVariants}
+          initial="hidden"
+          animate="show"
           sx={{
             display: { xs: "none", md: "flex" },
             gap: miniLaptop ? 0 : 2,
           }}
         >
           {(miniLaptop ? menuLinks : filteredMenu).map((item, index) => (
-            <Button
-              component={Link}
-              to={item.path}
+            <motion.div
               key={index}
-              color="inherit"
-              sx={{
-                fontWeight: 500,
-                letterSpacing: 1,
-              }}
+              variants={navItemVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {item.label}
-            </Button>
+              <Button
+                component={Link}
+                to={item.path}
+                color="inherit"
+                sx={{ fontWeight: 500, letterSpacing: 1 }}
+              >
+                {item.label}
+              </Button>
+            </motion.div>
           ))}
-        </Box>
+        </BoxMotion>
 
         {miniLaptop ? null : (
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              component={Link}
-              to="/login"
-              variant="text"
-              color="inherit"
-              size="large"
-            >
-              Login
-            </Button>
-            <Button
-              component={Link}
-              to="/register"
-              variant="contained"
-              color="secondary"
-              size="large"
-            >
-              Register
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                component={Link}
+                to="/login"
+                variant="text"
+                color="inherit"
+              >
+                Login
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                component={Link}
+                to="/register"
+                variant="contained"
+                color="secondary"
+              >
+                Register
+              </Button>
+            </motion.div>
           </Box>
         )}
 
         {smallDevice && (
-          <IconButton
-            sx={{ border: "1px solid #fff" }}
-            onClick={handleToggleSidebar}
+          <motion.div
+            whileTap={{ scale: 0.8 }}
+            animate={{ rotate: open ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            {open ? (
-              <CloseIcon sx={{ color: "primary.contrastText" }} />
-            ) : (
-              <MenuIcon sx={{ color: "primary.contrastText" }} />
-            )}
-          </IconButton>
+            <IconButton
+              sx={{ border: "1px solid #fff" }}
+              onClick={handleToggleSidebar}
+            >
+              {open ? (
+                <CloseIcon sx={{ color: "primary.contrastText" }} />
+              ) : (
+                <MenuIcon sx={{ color: "primary.contrastText" }} />
+              )}
+            </IconButton>
+          </motion.div>
         )}
 
         {smallDevice && (
@@ -113,7 +142,7 @@ const Header = () => {
           </Drawer>
         )}
       </Toolbar>
-    </AppBar>
+    </AppBarMotion>
   );
 };
 

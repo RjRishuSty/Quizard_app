@@ -1,8 +1,19 @@
 import { Box, Typography, Button, Card, CardContent } from "@mui/material";
 import React, { useState } from "react";
 import { flexAround } from "../styles/flexStyles";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import QuizeModel from "./QuizeModel";
+import { motion } from "framer-motion";
+import {
+  heroCardVariants,
+  imageCardVariants,
+} from "../animations/cardAnimations";
+import { fadeUp, staggerChildren } from "../animations/commanAnimations";
+
+const CardMotion = motion(Card);
+const BoxMotion = motion(Box);
+const MotionTypography = motion(Typography);
+const ButtonMotion = motion(Button);
 
 const Cards = ({ item, useIn }) => {
   const navigate = useNavigate();
@@ -25,8 +36,14 @@ const Cards = ({ item, useIn }) => {
     switch (useIn) {
       case "heroSection":
         return (
-          <CardContent>
-            <Typography
+          <CardContent
+            component={motion.div}
+            variants={staggerChildren}
+            initial="hidden"
+            animate="show"
+          >
+            <MotionTypography
+              variants={fadeUp}
               variant="h2"
               sx={{
                 fontSize: { xs: "1.8rem", md: "2.4rem" },
@@ -35,26 +52,35 @@ const Cards = ({ item, useIn }) => {
               }}
             >
               {item.title}
-            </Typography>
+            </MotionTypography>
 
-            <Typography variant="body1" sx={{ mb: 3, color: "inherit" }}>
+            <MotionTypography
+              variants={fadeUp}
+              variant="body1"
+              sx={{ mb: 3, color: "inherit" }}
+            >
               {item.description}
-            </Typography>
+            </MotionTypography>
 
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+            <BoxMotion
+              variants={fadeUp}
+              sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}
+            >
               {item.primaryBtn && (
-                <Button
+                <ButtonMotion
+                  variants={fadeUp}
                   variant={item.primaryBtn.variant}
                   color="secondary"
                   size="large"
                   onClick={generateQuizWithAi ? handleOpenModel : null}
                 >
                   {item.primaryBtn.text}
-                </Button>
+                </ButtonMotion>
               )}
 
               {item.secondaryBtn && (
-                <Button
+                <ButtonMotion
+                  variants={fadeUp}
                   variant={item.secondaryBtn.variant}
                   sx={{
                     color: "inherit",
@@ -63,18 +89,26 @@ const Cards = ({ item, useIn }) => {
                   size="large"
                 >
                   {item.secondaryBtn.text}
-                </Button>
+                </ButtonMotion>
               )}
-            </Box>
+            </BoxMotion>
           </CardContent>
         );
       case "ImageSection":
         return (
-          <>
-            <Box
+          <BoxMotion
+            variants={staggerChildren}
+            initial="hidden"
+            animate="show"
+            sx={{ position: "relative" }}
+          >
+            <BoxMotion
               component="img"
               src={item.image}
               alt={item.title}
+              variants={fadeUp}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
               sx={{
                 width: "100%",
                 objectFit: "cover",
@@ -87,7 +121,8 @@ const Cards = ({ item, useIn }) => {
                 },
               }}
             />
-            <Box
+            <BoxMotion
+              variants={fadeUp}
               sx={{
                 ...flexAround,
                 position: "absolute",
@@ -109,14 +144,15 @@ const Cards = ({ item, useIn }) => {
               >
                 7 Plays
               </Typography>
-            </Box>
-            <Typography
+            </BoxMotion>
+            <MotionTypography
+              variants={fadeUp}
               sx={{ p: 1, ml: 2, color: "primary.contrastText" }}
               fontWeight={500}
             >
               {item.title}
-            </Typography>
-          </>
+            </MotionTypography>
+          </BoxMotion>
         );
       default:
         return <Typography>Provide me where to use</Typography>;
@@ -124,7 +160,15 @@ const Cards = ({ item, useIn }) => {
   };
   return (
     <>
-      <Card
+      <CardMotion
+        variants={
+          useIn === "heroSection" ? heroCardVariants : imageCardVariants
+        }
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        whileHover={useIn === "heroSection" ? { scale: 1.02 } : {}}
+        whileTap={{ scale: 0.97 }}
         sx={{
           bgcolor: image ? "primary.dark" : "rgba(255,255,255,0.08)",
           p: { xs: image ? 0 : 2, sm: image ? 0 : 3, md: image ? 0 : 4 },
@@ -138,9 +182,13 @@ const Cards = ({ item, useIn }) => {
         onClick={image ? handleClick : null}
       >
         {renderCard()}
-      </Card>
+      </CardMotion>
       {openModel && (
-        <QuizeModel handleClose={handleCloseModel} open={openModel} useIn='generateQuize' />
+        <QuizeModel
+          handleClose={handleCloseModel}
+          open={openModel}
+          useIn="generateQuize"
+        />
       )}
     </>
   );
